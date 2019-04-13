@@ -4,16 +4,25 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.ml.vision.FirebaseVision;
+import com.google.firebase.ml.vision.common.FirebaseVisionImage;
+import com.google.firebase.ml.vision.label.FirebaseVisionImageLabel;
+import com.google.firebase.ml.vision.label.FirebaseVisionImageLabeler;
+
+import java.util.List;
+
+import androidx.annotation.NonNull;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -22,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
     protected static ImageView imgTaken;
     protected static TextView statusText;
     protected static TextView curStatusText;
+    protected static FirebaseVisionImage fireImage;
     static final int REQUEST_IMAGE_CAPTURE = 1;
     protected int status;
 
@@ -64,6 +74,8 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+
+
     }
 
     @Override
@@ -102,6 +114,32 @@ public class MainActivity extends AppCompatActivity {
             Bundle extras = data.getExtras();
             Bitmap imageBitmap = (Bitmap) extras.get("data");
             imgTaken.setImageBitmap(imageBitmap);
+
+
+            fireImage = FirebaseVisionImage.fromBitmap(imageBitmap);
+
+            FirebaseVisionImageLabeler labeler = FirebaseVision.getInstance()
+                    .getOnDeviceImageLabeler();
+            labeler.processImage(fireImage)
+                    .addOnSuccessListener(new OnSuccessListener<List<FirebaseVisionImageLabel>>() {
+                        @Override
+                        public void onSuccess(List<FirebaseVisionImageLabel> labels) {
+                            for (FirebaseVisionImageLabel label: labels) {
+                                String text = label.getText();
+                                String entityId = label.getEntityId();
+                                float confidence = label.getConfidence();
+                                System.out.println(text + ", " + entityId + ", " + confidence);
+                            }
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            // Task failed with an exception
+                            // ...
+                        }
+                    });
+
         }
     }
 
