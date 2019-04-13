@@ -32,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
     protected static TextView statusText;
     protected static TextView curStatusText;
     protected static FirebaseVisionImage fireImage;
+    public static Bitmap imageBitmap;
     static final int REQUEST_IMAGE_CAPTURE = 1;
     protected int status;
 
@@ -112,7 +113,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
             Bundle extras = data.getExtras();
-            Bitmap imageBitmap = (Bitmap) extras.get("data");
+            //Bitmap
+            imageBitmap = (Bitmap) extras.get("data");
             imgTaken.setImageBitmap(imageBitmap);
 
 

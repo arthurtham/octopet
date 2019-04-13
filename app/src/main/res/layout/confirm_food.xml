@@ -15,8 +15,8 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="112dp"
-        android:layout_marginBottom="292dp"
+        android:layout_marginStart="108dp"
+        android:layout_marginBottom="224dp"
         android:elevation="0dp"
         android:text="No"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -28,8 +28,8 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/question"
         android:layout_alignParentEnd="true"
-        android:layout_marginEnd="112dp"
-        android:layout_marginBottom="292dp"
+        android:layout_marginEnd="108dp"
+        android:layout_marginBottom="224dp"
         android:text="Yes"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
@@ -49,10 +49,10 @@
         android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@+id/textView5"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.911" />
+        app:layout_constraintVertical_bias="0.616" />
 
     <TextView
         android:id="@+id/textView5"
@@ -60,9 +60,25 @@
         android:layout_height="37dp"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/yesButton"
         app:layout_constraintHorizontal_bias="0.485"
-        app:layout_constraintStart_toEndOf="@+id/noButton"
-        tools:layout_editor_absoluteY="390dp" />
+        app:layout_constraintStart_toEndOf="@+id/noButton" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="278dp"
+        android:layout_height="295dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="76dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/question"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:srcCompat="@tools:sample/avatars[0]" />
 
 </android.support.constraint.ConstraintLayout>

@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 public class Confirm extends MainActivity {
@@ -35,13 +36,17 @@ public class Confirm extends MainActivity {
             food = extra.getString("food");
         }
 
+        imgTaken = (ImageView)findViewById(R.id.imageView);
+        imgTaken.setImageBitmap(MainActivity.imageBitmap);
+
 
         yesButton = (Button)findViewById(R.id.yesButton);
         noButton = (Button) findViewById(R.id.noButton);
         confirmation = (TextView) findViewById(R.id.question) ;
 
-        confirmation.setText("Do you want to feed Tofu " + food + " ?");
-        System.out.println("Set confirmation text to Do you want to feed Tofu " + food + " ?");
+        String prompt = "Do you want to feed Tofu the " + food + "?";
+        confirmation.setText(prompt);
+        System.out.println("Set confirmation text to '"+prompt+"'");
         yesButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
