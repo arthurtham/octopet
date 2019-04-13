@@ -24,6 +24,17 @@ import java.util.List;
 
 import androidx.annotation.NonNull;
 
+//Volley
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import java.util.HashMap;
+import java.util.Map;
+//End import volley
+
 public class MainActivity extends AppCompatActivity {
 
 
@@ -37,6 +48,39 @@ public class MainActivity extends AppCompatActivity {
     protected static int status = 0;
     protected static int health = 90;
 
+
+    private void animateGif(int status) {
+        //Key (to implement soon):
+        //     0 = good... 4 = bad (status)
+        //    -1 = excite (positive points)
+        //    -2 = disappoint (negative points)
+
+        RequestQueue MyRequestQueue = Volley.newRequestQueue(this);
+
+        String url = "https://api.transposit.com/app/thamaj/octopet_giphy/api/v1/execute/search_gifs";
+        StringRequest MyStringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                //This code is executed if the server responds, whether or not the response contains data.
+                //The String 'response' contains the server's response.
+                System.out.println(response);
+            }
+        }, new Response.ErrorListener() { //Create an error listener to handle errors appropriately.
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                //This code is executed if there is an error.
+                System.out.println("error");
+            }
+        }) {
+            protected Map<String, String> getParams() {
+                Map<String, String> MyData = new HashMap<String, String>();
+                MyData.put("query", "cat"); //Add the data you'd like to send to the server.
+                return MyData;
+            }
+        };
+        MyRequestQueue.add(MyStringRequest);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,7 +88,7 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-
+        animateGif(status);
 
         imageButton = findViewById(R.id.camera);
         imgTaken = (ImageView)findViewById(R.id.imageView);
