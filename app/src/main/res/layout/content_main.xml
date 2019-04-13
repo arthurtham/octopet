@@ -56,13 +56,34 @@
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="376dp"
-        android:layout_height="374dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="52dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        android:layout_width="129dp"
+        android:layout_height="135dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="44dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         tools:srcCompat="@tools:sample/avatars[10]" />
+
+    <pl.droidsonroids.gif.GifImageView
+        android:id="@+id/banana"
+        android:layout_width="150dp"
+        android:layout_height="142dp"
+        android:layout_marginBottom="44dp"
+        android:src="@drawable/banana"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/camera"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <WebView
+        android:id="@+id/octopet"
+        android:layout_width="395dp"
+        android:layout_height="390dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/name"
