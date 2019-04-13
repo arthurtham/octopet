@@ -1,5 +1,7 @@
 package com.example.octopet;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
@@ -35,9 +37,10 @@ public class MainActivity extends AppCompatActivity {
     protected static FirebaseVisionImage fireImage;
     public static Bitmap imageBitmap;
     static final int REQUEST_IMAGE_CAPTURE = 1;
-    protected static int status = 0;
-    protected static int health = 90;
-    public static final String MY_PREFS_NAME = "PetState";
+    protected static int status;
+    protected static int health;
+    protected static Boolean firstStart = true;
+    protected static final String MY_PREFS_NAME = "PetState";
     SharedPreferences myPrefs;
     SharedPreferences.Editor myEditor;
 
@@ -52,8 +55,13 @@ public class MainActivity extends AppCompatActivity {
         myEditor = myPrefs.edit();
         //String restoredState = myPrefs.getString(MY_PREFS_NAME, null);
         //if (restoredState != null) {
+            firstStart = myPrefs.getBoolean("firstStart", true);
             status = myPrefs.getInt("status", 0);
             health = myPrefs.getInt("health", 90);
+
+            if (firstStart) {
+                showPopUp();
+            }
         //}
 
         imageButton = findViewById(R.id.camera);
@@ -138,6 +146,7 @@ public class MainActivity extends AppCompatActivity {
                     //.getOnDeviceImageLabeler();
                     .getCloudImageLabeler();
             labeler.processImage(fireImage)
+
                     .addOnSuccessListener(new OnSuccessListener<List<FirebaseVisionImageLabel>>() {
                         @Override
                         public void onSuccess(List<FirebaseVisionImageLabel> labels) {
@@ -169,6 +178,20 @@ public class MainActivity extends AppCompatActivity {
                     });
 
         }
+    }
+
+    private void showPopUp() {
+        new AlertDialog.Builder(this)
+                .setTitle("Welcome to Octopet!")
+                .setMessage("Your pet's health will be dependent on your diet. Eat healthier and your pet won't die!")
+                .setPositiveButton("ok",new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                })
+                .create().show();
+        myEditor.putBoolean("firstStart", false).commit();
     }
 
     public void increasePoints() {
