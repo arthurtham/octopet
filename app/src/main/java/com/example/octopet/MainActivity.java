@@ -1,9 +1,13 @@
 package com.example.octopet;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.provider.MediaStore;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -26,7 +30,6 @@ import androidx.annotation.NonNull;
 
 public class MainActivity extends AppCompatActivity {
 
-
     protected static ImageButton imageButton;
     protected static ImageView imgTaken;
     protected static TextView statusText;
@@ -36,6 +39,10 @@ public class MainActivity extends AppCompatActivity {
     static final int REQUEST_IMAGE_CAPTURE = 1;
     protected int status;
 
+    SharedPreferences sharedPrefs;
+    static final String welcomeScreenShownPref = "welcomeScreenShown";
+    static final String petName = "petNameKey";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,7 +50,36 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this);
+        Boolean welcomeScreenShown = sharedPrefs.getBoolean(welcomeScreenShownPref, false);
 
+        if (!welcomeScreenShown) {
+            //EditText petNameField = findViewById(R.id.petNameEntry);
+            /*String whatsNewTitle = getResources().getString(R.string.whatsNewTitle);
+            //String whatsNewText = getResources().getString(R.string.whatsNewText);
+            new AlertDialog.Builder(this).setIcon(android.R.drawable.ic_dialog_alert)//.setTitle(whatsNewTitle).setMessage(whatsNewText)
+                .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    }).show();
+            SharedPreferences.Editor editor = mPrefs.edit();
+            editor.putBoolean(welcomeScreenShownPref, true);
+            editor.commit();*/
+            AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this).create();
+            alertDialog.setTitle("Welcome to Octopet!");
+            alertDialog.setMessage("Please select a name for your pet\n\n\n");
+            alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    });
+            alertDialog.show();
+            SharedPreferences.Editor editor = sharedPrefs.edit();
+            editor.putBoolean(welcomeScreenShownPref, true);
+            editor.commit();
+        }
 
         imageButton = findViewById(R.id.camera);
         imgTaken = (ImageView)findViewById(R.id.imageView);
