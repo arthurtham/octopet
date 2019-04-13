@@ -134,7 +134,15 @@ public class MainActivity extends AppCompatActivity {
                                 System.out.println(text + ", " + entityId + ", " + confidence);
                             }
                             Intent in = new Intent(MainActivity.this, Confirm.class);
-                            in.putExtra("food",labels.get(0).getText());
+
+                            for (int _i = 0; _i < 3; ++_i) {
+                                try {
+                                    in.putExtra("option"+(_i + 1), labels.get(_i).getText());
+                                } catch (Exception e){
+                                    continue;
+                                }
+                            }
+
                             startActivity(in);
                         }
                     })
