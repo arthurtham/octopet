@@ -85,10 +85,13 @@ public class Confirm extends MainActivity {
         option1.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 if (patternIsGood((String) option1.getText())) {
+                    increasePoints();
                     System.out.println("Good choice!");
                 } else {
+                    decreasePoints();
                     System.out.println("I don't feel so good chief");
                 }
+                setStatus();
                 startActivity(new Intent(Confirm.this, MainActivity.class));
             }
         });
@@ -96,10 +99,13 @@ public class Confirm extends MainActivity {
         option2.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 if (patternIsGood((String) option2.getText())) {
+                    increasePoints();
                     System.out.println("Good choice!");
                 } else {
+                    decreasePoints();
                     System.out.println("I don't feel so good chief");
                 }
+                setStatus();
                 startActivity(new Intent(Confirm.this, MainActivity.class));
             }
         });
@@ -107,10 +113,13 @@ public class Confirm extends MainActivity {
         option3.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 if (patternIsGood((String) option3.getText())) {
+                    increasePoints();
                     System.out.println("Good choice!");
                 } else {
+                    decreasePoints();
                     System.out.println("I don't feel so good chief");
                 }
+                setStatus();
                 startActivity(new Intent(Confirm.this, MainActivity.class));
             }
         });

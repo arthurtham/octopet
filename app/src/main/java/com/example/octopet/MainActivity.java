@@ -34,7 +34,8 @@ public class MainActivity extends AppCompatActivity {
     protected static FirebaseVisionImage fireImage;
     public static Bitmap imageBitmap;
     static final int REQUEST_IMAGE_CAPTURE = 1;
-    protected int status;
+    protected static int status = 0;
+    protected static int health = 90;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +61,9 @@ public class MainActivity extends AppCompatActivity {
         TextView statusText = findViewById(R.id.status);
         TextView curStatusText = findViewById(R.id.currentStatus);
 
+        setStatus();
+
+        System.out.println("Health: " + health);
         if (status == 0) {
             curStatusText.setText("GOOD");
         }
@@ -154,6 +158,32 @@ public class MainActivity extends AppCompatActivity {
                         }
                     });
 
+        }
+    }
+
+    public void increasePoints() {
+        health += 10;
+    }
+
+    public void decreasePoints() {
+        health -= 10;
+    }
+
+    public void setStatus() {
+        if (health >= 100 ) {
+            status = 0;
+        }
+        else if (health >=75) {
+            status = 1;
+        }
+        else if (health >= 50) {
+            status = 2;
+        }
+        else if (health >= 25) {
+            status = 3;
+        }
+        else {
+            status = 4;
         }
     }
 
