@@ -121,7 +121,8 @@ public class MainActivity extends AppCompatActivity {
             fireImage = FirebaseVisionImage.fromBitmap(imageBitmap);
 
             FirebaseVisionImageLabeler labeler = FirebaseVision.getInstance()
-                    .getOnDeviceImageLabeler();
+                    //.getOnDeviceImageLabeler();
+                    .getCloudImageLabeler();
             labeler.processImage(fireImage)
                     .addOnSuccessListener(new OnSuccessListener<List<FirebaseVisionImageLabel>>() {
                         @Override
