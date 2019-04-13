@@ -150,8 +150,8 @@ public class Confirm extends MainActivity {
     private Boolean stringMatch(String patternStr, String fileStr) {
         String[] patternArray = patternStr.split("[^A-Za-z0-9]");
         for (String patternToken : patternArray) {
-            System.out.println("Pattern:" + patternToken.toLowerCase());
-            System.out.println("fileStr:" + fileStr);
+            //System.out.println("Pattern:" + patternToken.toLowerCase());
+            //System.out.println("fileStr:" + fileStr);
             if (fileStr.contains(patternToken.toLowerCase())) {
                 System.out.println("The pattern matched!");
                 return true;
