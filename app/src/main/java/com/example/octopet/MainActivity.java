@@ -1,6 +1,7 @@
 package com.example.octopet;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -36,6 +37,9 @@ public class MainActivity extends AppCompatActivity {
     static final int REQUEST_IMAGE_CAPTURE = 1;
     protected static int status = 0;
     protected static int health = 90;
+    public static final String MY_PREFS_NAME = "PetState";
+    SharedPreferences myPrefs;
+    SharedPreferences.Editor myEditor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +48,13 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-
+        myPrefs = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
+        myEditor = myPrefs.edit();
+        String restoredState = myPrefs.getString(MY_PREFS_NAME, null);
+        if (restoredState != null) {
+            status = myPrefs.getInt("status", 0);
+            health = myPrefs.getInt("health", 90);
+        }
 
         imageButton = findViewById(R.id.camera);
         imgTaken = (ImageView)findViewById(R.id.imageView);
@@ -162,28 +172,37 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void increasePoints() {
+        //SharedPreferences.Editor myEditor = myPrefs.edit();
         health += 10;
+        myEditor.putInt("health", health+10).commit();
     }
 
     public void decreasePoints() {
         health -= 10;
+        myEditor.putInt("health", health-10).commit();
     }
 
     public void setStatus() {
+        //SharedPreferences.Editor myEditor = myPrefs.edit();
         if (health >= 100 ) {
             status = 0;
+            myEditor.putInt("status", 0).commit();
         }
         else if (health >=75) {
             status = 1;
+            myEditor.putInt("status", 1).commit();
         }
         else if (health >= 50) {
             status = 2;
+            myEditor.putInt("status", 2).commit();
         }
         else if (health >= 25) {
             status = 3;
+            myEditor.putInt("status", 3).commit();
         }
         else {
             status = 4;
+            myEditor.putInt("status", 4).commit();
         }
     }
 
