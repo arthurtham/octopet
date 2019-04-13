@@ -72,16 +72,15 @@
         app:layout_constraintEnd_toStartOf="@+id/camera"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <ImageView
+    <WebView
         android:id="@+id/octopet"
-        android:layout_width="389dp"
-        android:layout_height="379dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="7dp"
+        android:layout_width="395dp"
+        android:layout_height="390dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:srcCompat="@tools:sample/avatars[1]" />
+        app:layout_constraintTop_toTopOf="parent" />
 
 </android.support.constraint.ConstraintLayout>

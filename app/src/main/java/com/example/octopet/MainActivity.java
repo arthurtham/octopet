@@ -17,6 +17,7 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.webkit.WebView;
 
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -54,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
 
     protected static ImageButton imageButton;
     protected static ImageView imgTaken;
-    protected static ImageView octopet;
+    protected static WebView octopet;
     protected static TextView statusText;
     protected static TextView curStatusText;
     protected static FirebaseVisionImage fireImage;
@@ -92,8 +93,14 @@ public class MainActivity extends AppCompatActivity {
                         JSONArray result = data.getJSONArray("results");
                         JSONObject result2 = (JSONObject) result.getJSONObject(0);
                         //System.out.println(result2.get("url")); //This gives me the url
-                        octopet = (ImageView)findViewById(R.id.octopet);
-                        octopet.setImageDrawable(drawableFromUrl((String) result2.get("url")));
+                        //octopet = (ImageView)findViewById(R.id.octopet);
+                        //octopet.setImageDrawable(drawableFromUrl((String) result2.get("url")));
+                        octopet = findViewById(R.id.octopet);
+                        //octopet.setInitialScale(30);
+                        System.out.println((String) result2.get("id"));
+                        octopet.loadUrl("https://i.giphy.com/media/" + result2.get("id") + "/200.gif");
+                        //octopet.loadUrl((String) result2.get("url"));
+                        //setContentView(octopet );
                     } catch (Exception e) {
                         Log.e("error",e.getMessage());
                     //pass
@@ -117,8 +124,8 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-        StrictMode.setThreadPolicy(policy);
+        //StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        //StrictMode.setThreadPolicy(policy);
 
         animateGif(status);
 
@@ -255,7 +262,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private static Drawable drawableFromUrl(String url) throws java.net.MalformedURLException, java.io.IOException {
+    /*private static Drawable drawableFromUrl(String url) throws java.net.MalformedURLException, java.io.IOException {
         Bitmap x;
 
         HttpURLConnection connection = (HttpURLConnection) new URL(url).openConnection();
@@ -264,7 +271,7 @@ public class MainActivity extends AppCompatActivity {
 
         x = BitmapFactory.decodeStream(input);
         return new BitmapDrawable(x);
-    }
+    }*/
 
 
 
