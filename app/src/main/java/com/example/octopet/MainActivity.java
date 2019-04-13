@@ -130,6 +130,9 @@ public class MainActivity extends AppCompatActivity {
                                 float confidence = label.getConfidence();
                                 System.out.println(text + ", " + entityId + ", " + confidence);
                             }
+                            Intent in = new Intent(MainActivity.this, Confirm.class);
+                            in.putExtra("food",labels.get(0).getText());
+                            startActivity(in);
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {
