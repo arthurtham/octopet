@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -13,6 +14,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.ml.vision.FirebaseVision;
@@ -31,6 +33,11 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.HashMap;
 import java.util.Map;
 //End import volley
@@ -55,10 +62,53 @@ public class MainActivity extends AppCompatActivity {
         //    -1 = excite (positive points)
         //    -2 = disappoint (negative points)
 
-        RequestQueue MyRequestQueue = Volley.newRequestQueue(this);
+        JSONObject parameters = new JSONObject();
+        JSONObject query = new JSONObject();
+        try {
+            query.put("query", "cat");
+            parameters.put("parameters",query);
+        } catch (JSONException e) {
+            Log.e("error","JSONException");
+            //pass
+        }
 
+        RequestQueue MyRequestQueue = Volley.newRequestQueue(this);
         String url = "https://api.transposit.com/app/thamaj/octopet_giphy/api/v1/execute/search_gifs";
-        StringRequest MyStringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+
+        JsonObjectRequest jsObjRequest = new JsonObjectRequest(Request.Method.POST,url,parameters,
+            new Response.Listener<JSONObject>() {
+                @Override
+                public void onResponse(JSONObject response) {
+                    try {
+                        JSONObject data = response.getJSONObject("result");
+                        JSONArray result = data.getJSONArray("results");
+                        JSONObject result2 = (JSONObject) result.getJSONObject(0);
+                        System.out.println(result2.get("url")); //This gives me the url
+                    } catch (JSONException e) {
+                        Log.e("error","JSONException");
+                    //pass
+                    }
+                    //System.out.println(response);
+                }
+            },
+            new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Log.e("error","VolleyError");
+                }
+            });
+        MyRequestQueue.add(jsObjRequest);
+
+
+
+
+
+
+
+
+
+
+        /*StringRequest MyStringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 //This code is executed if the server responds, whether or not the response contains data.
@@ -78,7 +128,7 @@ public class MainActivity extends AppCompatActivity {
                 return MyData;
             }
         };
-        MyRequestQueue.add(MyStringRequest);
+        MyRequestQueue.add(MyStringRequest);*/
     }
 
     @Override
