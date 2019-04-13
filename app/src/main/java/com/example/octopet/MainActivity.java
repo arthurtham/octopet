@@ -1,6 +1,8 @@
 package com.example.octopet;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -85,7 +87,6 @@ public class MainActivity extends AppCompatActivity {
         TextView statusText = findViewById(R.id.status);
         TextView curStatusText = findViewById(R.id.currentStatus);
 
-
         setStatus();
 
         System.out.println("Health: " + health);
@@ -105,8 +106,11 @@ public class MainActivity extends AppCompatActivity {
             curStatusText.setText("DEAD");
         }
 
+        SharedPreferences sharedPref = MainActivity.this.getPreferences(Context.MODE_PRIVATE);
 
-
+        int defaultValue = health;
+        int newHealth = sharedPref.getInt(getString(R.string.saved_name), health);
+        health = newHealth;
 
 
     }
