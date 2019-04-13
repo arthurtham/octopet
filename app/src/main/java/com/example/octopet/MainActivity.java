@@ -6,9 +6,12 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -19,6 +22,8 @@ import com.google.firebase.ml.vision.FirebaseVision;
 import com.google.firebase.ml.vision.common.FirebaseVisionImage;
 import com.google.firebase.ml.vision.label.FirebaseVisionImageLabel;
 import com.google.firebase.ml.vision.label.FirebaseVisionImageLabeler;
+
+import org.w3c.dom.Text;
 
 import java.util.List;
 
@@ -31,11 +36,13 @@ public class MainActivity extends AppCompatActivity {
     protected static ImageView imgTaken;
     protected static TextView statusText;
     protected static TextView curStatusText;
+    protected static TextView nameText;
     protected static FirebaseVisionImage fireImage;
     public static Bitmap imageBitmap;
     static final int REQUEST_IMAGE_CAPTURE = 1;
     protected static int status = 0;
     protected static int health = 90;
+    protected static String name = "Tomo";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +52,23 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
 
+        nameText = (EditText) findViewById(R.id.name);
+        nameText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                name = nameText.getText().toString();
+            }
+        });
 
         imageButton = findViewById(R.id.camera);
         imgTaken = (ImageView)findViewById(R.id.imageView);
@@ -61,6 +85,7 @@ public class MainActivity extends AppCompatActivity {
         TextView statusText = findViewById(R.id.status);
         TextView curStatusText = findViewById(R.id.currentStatus);
 
+
         setStatus();
 
         System.out.println("Health: " + health);
@@ -75,6 +100,9 @@ public class MainActivity extends AppCompatActivity {
         }
         else if (status == 3) {
             curStatusText.setText("DYING");
+        }
+        else if (status == 4) {
+            curStatusText.setText("DEAD");
         }
 
 
@@ -170,16 +198,16 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void setStatus() {
-        if (health >= 100 ) {
+        if (health >= 75 ) {
             status = 0;
         }
-        else if (health >=75) {
+        else if (health >=50) {
             status = 1;
         }
-        else if (health >= 50) {
+        else if (health >= 25) {
             status = 2;
         }
-        else if (health >= 25) {
+        else if (health >= 0) {
             status = 3;
         }
         else {
