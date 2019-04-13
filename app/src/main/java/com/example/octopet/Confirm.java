@@ -78,7 +78,7 @@ public class Confirm extends MainActivity {
 
         confirmation = (TextView) findViewById(R.id.question) ;
 
-        String prompt = "Do you want to feed " + name + " the " + food + "?";
+        String prompt = "Do you want to feed " + name + "?";
         confirmation.setText(prompt);
         System.out.println("Set confirmation text to '"+prompt+"'");
 
