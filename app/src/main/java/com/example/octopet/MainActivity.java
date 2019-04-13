@@ -1,6 +1,9 @@
 package com.example.octopet;
 
+import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -8,8 +11,19 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
+
+
+    protected static ImageButton imageButton;
+    protected static ImageView imgTaken;
+    protected static TextView statusText;
+    protected static TextView curStatusText;
+    static final int REQUEST_IMAGE_CAPTURE = 1;
+    protected int status;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,14 +32,38 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
+
+
+        imageButton = findViewById(R.id.camera);
+        imgTaken = (ImageView)findViewById(R.id.imageView);
+        imageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                if (takePictureIntent.resolveActivity(getPackageManager()) != null)
+                startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
             }
         });
+
+
+        TextView statusText = findViewById(R.id.status);
+        TextView curStatusText = findViewById(R.id.currentStatus);
+
+        if (status == 0) {
+            curStatusText.setText("GOOD");
+        }
+        else if (status == 1) {
+            curStatusText.setText("FINE");
+        }
+        else if (status == 2) {
+            curStatusText.setText("DISTRESSED");
+        }
+        else if (status == 3) {
+            curStatusText.setText("DYING");
+        }
+
+
+
     }
 
     @Override
@@ -49,4 +87,15 @@ public class MainActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == REQUEST_IMAGE_CAPTURE) {
+            Bitmap image = (Bitmap) data.getExtras().get("data");
+            imgTaken.setImageBitmap(image);
+        }
+    }
+
+
 }
