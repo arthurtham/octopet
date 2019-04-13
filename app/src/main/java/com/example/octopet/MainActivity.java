@@ -50,11 +50,11 @@ public class MainActivity extends AppCompatActivity {
 
         myPrefs = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
         myEditor = myPrefs.edit();
-        String restoredState = myPrefs.getString(MY_PREFS_NAME, null);
-        if (restoredState != null) {
+        //String restoredState = myPrefs.getString(MY_PREFS_NAME, null);
+        //if (restoredState != null) {
             status = myPrefs.getInt("status", 0);
             health = myPrefs.getInt("health", 90);
-        }
+        //}
 
         imageButton = findViewById(R.id.camera);
         imgTaken = (ImageView)findViewById(R.id.imageView);
