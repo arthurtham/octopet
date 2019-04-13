@@ -2,7 +2,11 @@ package com.example.octopet;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -22,6 +26,10 @@ import com.google.firebase.ml.vision.common.FirebaseVisionImage;
 import com.google.firebase.ml.vision.label.FirebaseVisionImageLabel;
 import com.google.firebase.ml.vision.label.FirebaseVisionImageLabeler;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.List;
 
 import androidx.annotation.NonNull;
@@ -44,9 +52,9 @@ import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
 
-
     protected static ImageButton imageButton;
     protected static ImageView imgTaken;
+    protected static ImageView octopet;
     protected static TextView statusText;
     protected static TextView curStatusText;
     protected static FirebaseVisionImage fireImage;
@@ -83,9 +91,11 @@ public class MainActivity extends AppCompatActivity {
                         JSONObject data = response.getJSONObject("result");
                         JSONArray result = data.getJSONArray("results");
                         JSONObject result2 = (JSONObject) result.getJSONObject(0);
-                        System.out.println(result2.get("url")); //This gives me the url
-                    } catch (JSONException e) {
-                        Log.e("error","JSONException");
+                        //System.out.println(result2.get("url")); //This gives me the url
+                        octopet = (ImageView)findViewById(R.id.octopet);
+                        octopet.setImageDrawable(drawableFromUrl((String) result2.get("url")));
+                    } catch (Exception e) {
+                        Log.e("error",e.getMessage());
                     //pass
                     }
                     //System.out.println(response);
@@ -98,37 +108,6 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
         MyRequestQueue.add(jsObjRequest);
-
-
-
-
-
-
-
-
-
-
-        /*StringRequest MyStringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                //This code is executed if the server responds, whether or not the response contains data.
-                //The String 'response' contains the server's response.
-                System.out.println(response);
-            }
-        }, new Response.ErrorListener() { //Create an error listener to handle errors appropriately.
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                //This code is executed if there is an error.
-                System.out.println("error");
-            }
-        }) {
-            protected Map<String, String> getParams() {
-                Map<String, String> MyData = new HashMap<String, String>();
-                MyData.put("query", "cat"); //Add the data you'd like to send to the server.
-                return MyData;
-            }
-        };
-        MyRequestQueue.add(MyStringRequest);*/
     }
 
     @Override
@@ -137,6 +116,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
 
         animateGif(status);
 
@@ -199,14 +181,6 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    /*protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode == REQUEST_IMAGE_CAPTURE) {
-            Bitmap image = (Bitmap) data.getExtras().get("data");
-            imgTaken.setImageBitmap(image);
-        }
-    }*/
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
@@ -280,6 +254,18 @@ public class MainActivity extends AppCompatActivity {
             status = 4;
         }
     }
+
+    private static Drawable drawableFromUrl(String url) throws java.net.MalformedURLException, java.io.IOException {
+        Bitmap x;
+
+        HttpURLConnection connection = (HttpURLConnection) new URL(url).openConnection();
+        connection.connect();
+        InputStream input = connection.getInputStream();
+
+        x = BitmapFactory.decodeStream(input);
+        return new BitmapDrawable(x);
+    }
+
 
 
 }
