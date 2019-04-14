@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "373853557266",
+    "firebase_url": "https://octopet.firebaseio.com",
+    "project_id": "octopet",
+    "storage_bucket": "octopet.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:373853557266:android:b86faab37cf60c54",
+        "android_client_info": {
+          "package_name": "com.example.octopet"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "373853557266-95v80ko7ii1sdmf7gb8sjcead7tr124q.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCXy0VA-RBrLnZDns5xvRX_o8zjx58qIx4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "373853557266-95v80ko7ii1sdmf7gb8sjcead7tr124q.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
