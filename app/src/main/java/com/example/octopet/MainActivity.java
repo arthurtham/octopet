@@ -85,6 +85,14 @@ public class MainActivity extends AppCompatActivity {
     SharedPreferences myPrefs;
     SharedPreferences.Editor myEditor;
 
+    protected int randomInteger(int upperBound) {
+        //Random number
+        double randomDouble = Math.random();
+        randomDouble = randomDouble * upperBound;
+        int randomInt = (int) randomDouble;
+        System.out.println("randomint: " + randomInt);
+        return randomInt;
+    }
 
     private void animateGif(int status) {
         //Key (to implement soon):
@@ -92,10 +100,7 @@ public class MainActivity extends AppCompatActivity {
         //    -1 = excite (positive points)
         //    -2 = disappoint (negative points)
 
-        //Random number
-        double randomDouble = Math.random();
-        randomDouble = randomDouble * 3;
-        int randomInt = (int) randomDouble;
+        int randomInt = randomInteger(3);
         System.out.println("randomint: " + randomInt);
 
         String mood;
@@ -412,8 +417,21 @@ public class MainActivity extends AppCompatActivity {
         health += 10;
         status = -1; // means good
         myEditor.putInt("health", health+10).commit();
-        showDialogBox("Good moves!","Your octopet " + name
-        + " really liked it.");
+        switch (randomInteger(2)) {
+            case 0:
+                showDialogBox("Woo hoo!",  "That food was so healthy!");
+                break;
+            case 1:
+                showDialogBox("Gulp!",  ""+name+" really loved that dinner!");
+                break;
+            case 2:
+                showDialogBox(name,  "I feel great! Oh I feel so great!");
+                break;
+            default:
+                showDialogBox("Good moves!","Your octopet " + name
+                        + " really liked it.");
+                break;
+        }
     }
 
     public void decreasePoints() {
@@ -421,8 +439,21 @@ public class MainActivity extends AppCompatActivity {
         health -= 10;
         status = -2; // means bad
         myEditor.putInt("health", health-10).commit();
-        showDialogBox("Uh oh","Your octopet " + name
-                + "'s body didn't really like it...");
+        switch (randomInteger(2)) {
+            case 0:
+                showDialogBox("Mr Stark...",  "I don't feel so good, chief.");
+                break;
+            case 1:
+                showDialogBox("Ahhh!",  "My stomach doesn't feel well!");
+                break;
+            case 2:
+                showDialogBox(name,  "I feel sick...");
+                break;
+            default:
+                showDialogBox("Uh oh", "Your octopet " + name
+                    + "'s body didn't really like it...");
+                break;
+        }
 
     }
 
