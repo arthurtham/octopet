@@ -77,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
     static final int REQUEST_IMAGE_CAPTURE = 1;
     protected static int status = 0;
     protected static int health = 90;
-    protected static String name;
+    protected static String name = "Tomo";
     protected static final String MY_PREFS_NAME = "PetState";
     SharedPreferences myPrefs;
     SharedPreferences.Editor myEditor;
@@ -143,16 +143,20 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         myPrefs = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
-        myEditor = myPrefs.edit();
+        //myEditor = myPrefs.edit();
+
+        System.out.println("NAME before IS: " + name);
 
         status = myPrefs.getInt("status",0);
         health = myPrefs.getInt("health",90);
         name = myPrefs.getString("name", "Tomo");
+        System.out.println("NAME IS: " + name);
         //StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         //StrictMode.setThreadPolicy(policy);
 
         nameText = (EditText) findViewById(R.id.name);
         nameText.setText(name);
+        System.out.println("Name should be Tomo is actually: " + nameText.getText());
         /*
         nameText.setOnKeyListener(new View.OnKeyListener() {
             public boolean onKey(View v, int keyCode, KeyEvent event) {
@@ -188,6 +192,7 @@ public class MainActivity extends AppCompatActivity {
             public void afterTextChanged(Editable editable) {
                 name = nameText.getText().toString();
                 System.out.println("After text changed: " + name);
+                myEditor = myPrefs.edit();
                 myEditor.putString("name", name).commit();
             }
 
@@ -215,19 +220,19 @@ public class MainActivity extends AppCompatActivity {
 
         System.out.println("Health: " + health);
         if (status == 0) {
-            curStatusText.setText("GOOD");
+            curStatusText.setText("good");
         }
         else if (status == 1) {
-            curStatusText.setText("FINE");
+            curStatusText.setText("fine");
         }
         else if (status == 2) {
-            curStatusText.setText("DISTRESSED");
+            curStatusText.setText("distressed");
         }
         else if (status == 3) {
-            curStatusText.setText("DYING");
+            curStatusText.setText("dying");
         }
         else if (status == 4) {
-            curStatusText.setText("DEAD");
+            curStatusText.setText("dead");
         }
 
 
@@ -307,16 +312,19 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void increasePoints() {
+        myEditor = myPrefs.edit();
         health += 10;
         myEditor.putInt("health", health+10).commit();
     }
 
     public void decreasePoints() {
+        myEditor = myPrefs.edit();
         health -= 10;
         myEditor.putInt("health", health-10).commit();
     }
 
     public void setStatus() {
+        myEditor = myPrefs.edit();
         if (health >= 75 ) {
             status = 0;
             myEditor.putInt("status", 0).commit();
