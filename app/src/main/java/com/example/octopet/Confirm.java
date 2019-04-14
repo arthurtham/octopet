@@ -10,6 +10,8 @@ import android.widget.TextView;
 
 import com.google.android.gms.common.util.IOUtils;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.io.StringWriter;
 import java.util.Scanner;
@@ -131,6 +133,11 @@ public class Confirm extends MainActivity {
             }
         });
 
+
+
+        String item = "apples and durian";
+        System.out.println("Is " + item + " good? - " + patternIsGood(item));
+
     }
 
     private String openFile(String fileName) {
@@ -147,30 +154,76 @@ public class Confirm extends MainActivity {
         }
     }
 
-    private Boolean stringMatch(String patternStr, String fileStr) {
+    /* Now checks that every word in patternStr is within the
+     * string of the entire file using contains else returns false
+     */
+ /*   private Boolean stringMatch(String patternStr, String goodFile, String badFile) {
         String[] patternArray = patternStr.split("[^A-Za-z0-9]");
+        boolean temp = false;
         for (String patternToken : patternArray) {
             //System.out.println("Pattern:" + patternToken.toLowerCase());
             //System.out.println("fileStr:" + fileStr);
-            if (fileStr.contains(patternToken.toLowerCase())) {
+
+            if (badFile.contains(patternToken.toLowerCase())) {
                 System.out.println("The pattern matched!");
-                return true;
+                temp = false;
             }
+            if (goodFile.contains(patternToken.toLowerCase())) {
+                System.out.println("The pattern matched!");
+                temp = true;
+            }
+
+            temp = false;
+
         }
-        System.out.println("No patterns matched.");
-        return false;
+        System.out.println("Every word in patternStr matched up.");
+        return true;
+    }*/
+
+    // Check entire patternStr vs each entire item in the file provided
+    private Boolean stringMatchEach(String patternStr, String filename) {
+        boolean result = false;
+        try {
+            File file = new File(filename);
+            Scanner scanner = new Scanner(file);
+            result = false;
+            while (scanner.hasNext()) {
+                String s = scanner.next();
+                if (s.equals(patternStr) || (s+"s").equals(patternStr) || (s+"es").equals(patternStr)) {
+                    result = true;
+                    break;
+                }
+            }
+            scanner.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        return result;
     }
 
     private Boolean patternIsGood(String pattern) {
         System.out.println("Checking bad list...");
         String badList = openFile("bad.txt");
-        if (stringMatch(pattern,badList)) {
-            System.out.println("This item is in the bad list.");
+        if (stringMatchEach(pattern,"bad.txt")) {
+            System.out.println("This item is definitely in the bad list.");
             return false; // it's a bad item
         }
         System.out.println("Checking good list...");
         String goodList = openFile("good.txt");
-        return (stringMatch(pattern,goodList)); //true: it's a good item. false: it's a bad item
+        if (stringMatchEach(pattern, "good.txt")) {
+            System.out.println("This item is definitely in the good list.");
+            return true;
+        }
+
+        String[] patternArray = pattern.split("[^A-Za-z0-9]");
+        if (stringMatchEach(patternArray[patternArray.length-1], "bad.txt")) {
+            return false;
+        }
+        if (stringMatchEach(patternArray[patternArray.length-1], "good.txt")) {
+            return true;
+        }
+        //return (stringMatch(pattern,goodList)); //true: it's a good item. false: it's a bad item
+        return false;
     }
 
 }

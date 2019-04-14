@@ -1,94 +1,104 @@
 asparagus
-avocados
-beet greens
-beets
-bell peppers
+avocado
+beet
+bell pepper
 bok choy
 broccoli
 brussels sprouts
 cabbage
-carrots
+carrot
 cauliflower
 celery
-collard greens
+collard green
 corn fresh sweet
-cucumbers
+cucumber
 eggplant
 fennel
 garlic
-green beans
-green peas
+green bean
+green pea
 kale
-leeks
+leek
 mushrooms crimini
 mushrooms shiitake
-mustard greens
+mustard green
 olive oil extra virgin
-olives
-onions
+olive
+onion
+potato
 potatoes
+lettuce
 romaine lettuce
-sea vegetables
+sea vegetable
 spinach
+squash
 squash summer
 squash winter
-sweet potatoes
+sweet potato
 swiss chard
-tomatoes
-turnip greens
-almonds
-cashews
-flaxseeds
-peanuts
-pumpkin seeds
-sesame seeds
-sunflower seeds
-walnuts
-apples
-apricots
-bananas
-blueberries
+tomato
+turnip
+almond
+cashew
+flaxseed
+peanut
+pumpkin seed
+sesame seed
+sunflower seed
+seed
+walnut
+apple
+apricot
+banana
+blueberry
 cantaloupe
-cranberries
+cranberry
 figs
 grapefruit
 grapes
-kiwifruit
-lemon limes
-oranges
+kiwi
+jackfruit
+lemon
+lime
+berry
+orange
 papaya
-pears
+pear
 pineapple
-plums prunes
-raspberries
-strawberries
+plum
+prune
+raspberry
+strawberry
 watermelon
 water
-black beans
-dried peas
-garbanzo beans (chickpeas)
-kidney beans
-lentils
-lima beans
+black bean
+dried pea
+garbanzo bean
+chickpea
+bean
+kidney bean
+lentil
+lima bean
 miso
-navy beans
-pinto beans
+navy bean
+pinto bean
 soy sauce
-soybeans
+soybean
 tempeh
 tofu
-beef grass-fed
-chicken pasture-raised
-lamb grass-fed
-turkey pasture-raised
-cheese grass-fed
-cow's milk grass-fed
-eggs pasture-raised
-yogurt grass-fed
+beef
+pork
+chicken
+lamb
+turkey
+cheese
+eggs
+yogurt
+tea
 cod
 salmon
-sardines
-scallops
+sardine
+scallop
 shrimp
 tuna
 barley
@@ -102,13 +112,13 @@ whole wheat
 basil
 black pepper
 chili pepper dried
-cilantro coriander seeds
+cilantro coriander seed
 cinnamon ground
-cloves
-cumin seeds
+clove
+cumin seed
 dill
 ginger
-mustard seeds
+mustard seed
 oregano
 parsley
 peppermint
@@ -118,3 +128,45 @@ thyme
 turmeric
 natural
 natural food
+fruit
+vegetable
+bread
+grain
+rice
+nut
+dairy
+milk
+toast
+egg
+bagel
+sausage
+sandwich
+burrito
+durian
+guava
+peas
+corn
+beet
+radish
+green onion
+greens
+salad
+quinoa
+wheat
+eggplant
+rice
+beansprout
+bean sprout
+steak
+lemongrass
+pumpkin
+zucchini
+avocado
+brussel sprout
+mango
+peach
+omelette
+superfood
+soup
+oxtail
+noodle

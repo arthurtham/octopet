@@ -322,8 +322,6 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-
-
     }
 
     private void setDelayedAnimation(int status) {

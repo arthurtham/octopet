@@ -1,3 +1,18 @@
+junk food
+snack
+sugar
+chips
+pizza
+cake
+cupcake
+bacon
+fried
+fries
+fast food
+soda
+candy
+sweets
+coffee
 apple pie
 pancake syrup
 blueberry muffin
@@ -27,8 +42,6 @@ strawberry funnel cake
 chocolate chip cookie
 fried ice cream
 rock candy stick
-fruit tart
-banana foster
 meatlover’s deep dish pizza
 biscuits and gravy
 buffalo wings
@@ -86,6 +99,11 @@ carne asada taco
 philly cheese sandwich
 steak enchilada
 croissant
-junk food
-snack
-cuisine
+sauce
+jam
+molasses
+maple syrup
+syrup
+pancake
+waffle
+barbecue
