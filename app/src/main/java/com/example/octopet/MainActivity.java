@@ -1,6 +1,7 @@
 package com.example.octopet;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
@@ -8,8 +9,10 @@ import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.StrictMode;
 import android.provider.MediaStore;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
@@ -89,10 +92,90 @@ public class MainActivity extends AppCompatActivity {
         //    -1 = excite (positive points)
         //    -2 = disappoint (negative points)
 
+        //Random number
+        double randomDouble = Math.random();
+        randomDouble = randomDouble * 3;
+        int randomInt = (int) randomDouble;
+        System.out.println("randomint: " + randomInt);
+
+        String mood;
+        String bugCatURL = "";
+
+        switch (status) {
+            case 4: // dead
+                mood = "fat";
+                switch(randomInt) {
+                    case 0:
+                        bugCatURL = "1ezBmYXT1ccSbh0fep";
+                        break;
+                    case 1:
+                        bugCatURL = "8clM9axkgqoFzy2HjD";
+                        break;
+                    case 2:
+                        bugCatURL = "DBH3acVby8yT3geiJD";
+                        break;
+                }
+                break;
+            case 2: // sad
+                mood = "sad";
+                switch(randomInt) {
+                    case 0:
+                        bugCatURL = "14SGx6CtrLrj7dvOa3";
+                        break;
+                    case 1:
+                        bugCatURL = "uWzRXTQRoQzxDO9W0p";
+                        break;
+                    case 2:
+                        bugCatURL = "l4FGpa3DuEFMrghKE";
+                        break;
+                }
+                break;
+            case 3: mood = "mad"; //mad
+                switch(randomInt) {
+                    case 0:
+                        bugCatURL = "65Th0K9yQJtKcxeYyN";
+                        break;
+                    case 1:
+                        bugCatURL = "uBn5A3rxwD7N8nZvlw";
+                        break;
+                    case 2:
+                        bugCatURL = "oy9hVQl8Hq7o8T3tER";
+                        break;
+                }
+                break;
+            case 0: mood = "happy"; //happy
+                switch(randomInt) {
+                    case 0:
+                        bugCatURL = "fngeQvy995JpJhoMgz";
+                        break;
+                    case 1:
+                        bugCatURL = "sRHOAgD3AA1DnFTR25";
+                        break;
+                    case 2:
+                        bugCatURL = "9V5fArpd99fLoemwn3";
+                        break;
+                }
+                break;
+            case 1: mood = "excited";
+                switch(randomInt) {
+                    case 0:
+                        bugCatURL = "MX5tWoGn9B3iU1riZJ";
+                        break;
+                    case 1:
+                        bugCatURL = "piTZCzZKam8JXpTjZ1";
+                        break;
+                    case 2:
+                        bugCatURL = "2mzRDsekJ4VqZIa2Cd";
+                        break;
+                }
+                break;
+            default: mood = "okay"; break;
+        }
+
         JSONObject parameters = new JSONObject();
         JSONObject query = new JSONObject();
         try {
-            query.put("query", "cat");
+            query.put("query", bugCatURL);
             parameters.put("parameters",query);
         } catch (JSONException e) {
             Log.e("error","JSONException");
@@ -100,7 +183,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         RequestQueue MyRequestQueue = Volley.newRequestQueue(this);
-        String url = "https://api.transposit.com/app/thamaj/octopet_giphy/api/v1/execute/search_gifs";
+        String url = "https://api.transposit.com/app/thamaj/octopet_giphy/api/v1/execute/get_gif";
 
         JsonObjectRequest jsObjRequest = new JsonObjectRequest(Request.Method.POST,url,parameters,
             new Response.Listener<JSONObject>() {
@@ -109,7 +192,7 @@ public class MainActivity extends AppCompatActivity {
                     try {
                         JSONObject data = response.getJSONObject("result");
                         JSONArray result = data.getJSONArray("results");
-                        JSONObject result2 = (JSONObject) result.getJSONObject(0);
+                        JSONObject result2 = (JSONObject) result.getJSONObject( 0);
                         //System.out.println(result2.get("url")); //This gives me the url
                         //octopet = (ImageView)findViewById(R.id.octopet);
                         //octopet.setImageDrawable(drawableFromUrl((String) result2.get("url")));
@@ -198,7 +281,7 @@ public class MainActivity extends AppCompatActivity {
 
         });
 
-        animateGif(status);
+
 
         imageButton = findViewById(R.id.camera);
         imgTaken = (ImageView)findViewById(R.id.imageView);
@@ -215,8 +298,10 @@ public class MainActivity extends AppCompatActivity {
         TextView statusText = findViewById(R.id.status);
         TextView curStatusText = findViewById(R.id.currentStatus);
 
-
         setStatus();
+
+        animateGif(status);
+
 
         System.out.println("Health: " + health);
         if (status == 0) {
@@ -239,6 +324,17 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+    }
+
+    private void setDelayedAnimation(int status) {
+        final Handler handler = new Handler();
+        final int status2 = status;
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                animateGif(status2);
+            }
+        }, 3000);
     }
 
     @Override
@@ -314,13 +410,20 @@ public class MainActivity extends AppCompatActivity {
     public void increasePoints() {
         myEditor = myPrefs.edit();
         health += 10;
+        status = -1; // means good
         myEditor.putInt("health", health+10).commit();
+        showDialogBox("Good moves!","Your octopet " + name
+        + " really liked it.");
     }
 
     public void decreasePoints() {
         myEditor = myPrefs.edit();
         health -= 10;
+        status = -2; // means bad
         myEditor.putInt("health", health-10).commit();
+        showDialogBox("Uh oh","Your octopet " + name
+                + "'s body didn't really like it...");
+
     }
 
     public void setStatus() {
@@ -359,17 +462,19 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    /*private static Drawable drawableFromUrl(String url) throws java.net.MalformedURLException, java.io.IOException {
-        Bitmap x;
-
-        HttpURLConnection connection = (HttpURLConnection) new URL(url).openConnection();
-        connection.connect();
-        InputStream input = connection.getInputStream();
-
-        x = BitmapFactory.decodeStream(input);
-        return new BitmapDrawable(x);
-    }*/
-
+    protected void showDialogBox(String title, String message) {
+        /*AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this).create();
+        alertDialog.setTitle(title);
+        alertDialog.setMessage(message);
+        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+        alertDialog.show();*/
+        Toast.makeText(getApplicationContext(),title + ": " + message,Toast.LENGTH_LONG).show();
+    }
 
 
 }
