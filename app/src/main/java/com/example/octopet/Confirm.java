@@ -135,7 +135,7 @@ public class Confirm extends MainActivity {
 
 
 
-        String item = "apples and durian";
+        String item = "apple";
         System.out.println("Is " + item + " good? - " + patternIsGood(item));
 
     }
@@ -184,25 +184,28 @@ public class Confirm extends MainActivity {
     private Boolean stringMatchEach(String patternStr, String filename) {
         boolean result = false;
         try {
-            File file = new File(filename);
-            Scanner scanner = new Scanner(file);
+            //File file = new File(filename);
+            //System.out.println("This is filename" + filename);
+            Scanner scanner = new Scanner(getAssets().open(filename));
             result = false;
-            while (scanner.hasNext()) {
-                String s = scanner.next();
+            while (scanner.hasNextLine()) {
+                String s = scanner.nextLine();
                 if (s.equals(patternStr) || (s+"s").equals(patternStr) || (s+"es").equals(patternStr)) {
                     result = true;
                     break;
                 }
             }
             scanner.close();
-        } catch (FileNotFoundException e) {
+        } catch (java.io.IOException e) {
             e.printStackTrace();
+            System.out.println("FAILED TO OPEN");
         }
         return result;
     }
 
     private Boolean patternIsGood(String pattern) {
         System.out.println("Checking bad list...");
+
         String badList = openFile("bad.txt");
         if (stringMatchEach(pattern,"bad.txt")) {
             System.out.println("This item is definitely in the bad list.");
